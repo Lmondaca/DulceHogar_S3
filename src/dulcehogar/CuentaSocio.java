@@ -1,7 +1,7 @@
 package dulcehogar;
 
 import java.util.Scanner;
-
+//nadadenada
 public class CuentaSocio {
 
     private int numeroCuenta;
