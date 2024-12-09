@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package dulcehogar.vistas;
+package com.grupo11.dulcehogar.s3.vistas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import bd_dulcehogar.Conexion;
+import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
 import javax.swing.JOptionPane;
 
 /**
@@ -47,22 +47,12 @@ public class pagarCuotaMensual extends javax.swing.JInternalFrame {
         jLabel1.setText("RUT Socio:");
 
         btn_buscar.setText("Buscar");
-        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_buscarActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Monto Cuota");
 
         jLabel3.setText("Numero Cuota:");
 
         btn_pagar.setText("Pagar");
-        btn_pagar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pagarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

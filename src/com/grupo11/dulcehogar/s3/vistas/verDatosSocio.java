@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package dulcehogar.vistas;
+package com.grupo11.dulcehogar.s3.vistas;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import bd_dulcehogar.Conexion;
+import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
 import javax.swing.JOptionPane;
-import dulcehogar.Validar;
+import com.grupo11.dulcehogar.s3.negocio.Validar;
 
 /**
  *

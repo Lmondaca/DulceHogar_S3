@@ -1,4 +1,4 @@
-package dulcehogar;
+package com.grupo11.dulcehogar.s3.negocio;
 
 import java.util.Scanner;
 //nadadenada
