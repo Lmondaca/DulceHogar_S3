@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
+import com.grupo11.dulcehogar.s3.negocio.NegCuentaSocio;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,11 +17,13 @@ import javax.swing.JOptionPane;
  */
 public class montoTotalCancelado extends javax.swing.JInternalFrame {
 
+    NegCuentaSocio negCuentaSocio;
     /**
      * Creates new form montoTotalCancelado
      */
     public montoTotalCancelado() {
         initComponents();
+        this.negCuentaSocio=new NegCuentaSocio();
     }
 
     /**
@@ -44,6 +47,11 @@ public class montoTotalCancelado extends javax.swing.JInternalFrame {
         jLabel1.setText("RUT Socio:");
 
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Monto Total Cancelado:");
 
@@ -88,26 +96,16 @@ public class montoTotalCancelado extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        String rut = txt_RUT.getText();
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+         String rut = txt_RUT.getText();
 
-        Conexion conexion = new Conexion();
-        Connection cnx = conexion.obtenerConexion();
-        try {
-            String query = "SELECT SUM(cantaportada) AS total_cancelado FROM cuenta_socio WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
-            PreparedStatement pst = cnx.prepareStatement(query);
-            pst.setString(1, rut);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next() && rs.getString("total_cancelado") != null) {
-                txt_montoTotalCancelado.setText(rs.getString("total_cancelado"));
-            } else {
-                JOptionPane.showMessageDialog(this, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            cnx.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+        txt_montoTotalCancelado.setText(negCuentaSocio.buscarMontoApor(this,rut));
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    
+
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

@@ -5,6 +5,7 @@
 package com.grupo11.dulcehogar.s3.negocio;
 
 import com.grupo11.dulcehogar.s3.acceso_datos.AccCuentaSocio;
+import com.grupo11.dulcehogar.s3.vistas.montoTotalCancelado;
 import com.grupo11.dulcehogar.s3.vistas.pagarCuotaMensual;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -74,6 +75,24 @@ public class NegCuentaSocio {
             JOptionPane.showMessageDialog(thispagarCuotaMensual, "Error al pagar la cuota", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public String buscarMontoApor(montoTotalCancelado thismontoTotalCancelado, String rut) {
+        
+        try {
+            String montoApor= accCuentaSocio.buscarMontoApor(rut);
+            if(montoApor!=""){
+                return montoApor;
+            }
+            else{
+                JOptionPane.showMessageDialog(thismontoTotalCancelado, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+   
 
     
     
