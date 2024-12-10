@@ -4,8 +4,10 @@
  */
 package com.grupo11.dulcehogar.s3.acceso_datos;
 
+import com.grupo11.dulcehogar.s3.negocio.CuentaSocio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -26,5 +28,42 @@ public class AccCuentaSocio {
         return cnx;
         
     }
+        public CuentaSocio buscarValorCuota(String rut) {
+
+        try {
+            Conexion conexion = new Conexion();
+            Connection cnx = conexion.obtenerConexion();
+            String query = "SELECT numerocuenta, valorcuota, cantaportada, numcuota FROM cuenta_socio WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setString(1, rut);
+            ResultSet rs = pst.executeQuery();
+            boolean isNext = rs.next();
+            
+            if (isNext) {
+                CuentaSocio cuentaSocio = new CuentaSocio(Integer.parseInt(rs.getString("numerocuenta")), Integer.parseInt(rs.getString("valorcuota")), Integer.parseInt(rs.getString("cantaportada")), Integer.parseInt(rs.getString("numcuota")));
+                cnx.close();
+                return cuentaSocio;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+
+    }
+        public void pagarCuota(double nuevaCantidadAportada, int nuevoNumeroCuota, String rut) throws SQLException {
+        Conexion conexion = new Conexion();
+        Connection cnx = conexion.obtenerConexion();
+        String updateQuery = "UPDATE cuenta_socio SET cantaportada = ?, numcuota = ? WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
+        PreparedStatement updatePst = cnx.prepareStatement(updateQuery);
+        updatePst.setDouble(1, nuevaCantidadAportada);
+        updatePst.setInt(2, nuevoNumeroCuota);
+        updatePst.setString(3, rut);
+        updatePst.executeUpdate();
+        cnx.close();
+    }
+
     
 }

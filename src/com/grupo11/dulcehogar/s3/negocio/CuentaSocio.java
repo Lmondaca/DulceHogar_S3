@@ -16,6 +16,14 @@ public class CuentaSocio {
         this.numCuota = 0;
     }
 
+    public CuentaSocio(int numeroCuenta, int valorCuota, int cantAportada, int numCuota) {
+        this.numeroCuenta = numeroCuenta;
+        this.valorCuota = valorCuota;
+        this.cantAportada = cantAportada;
+        this.numCuota = numCuota;
+    }
+    
+
     public int getNumCuota() {
         return numCuota;
     }

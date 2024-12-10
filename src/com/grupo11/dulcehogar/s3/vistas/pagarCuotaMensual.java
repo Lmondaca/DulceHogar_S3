@@ -4,23 +4,21 @@
  */
 package com.grupo11.dulcehogar.s3.vistas;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
-import javax.swing.JOptionPane;
+import com.grupo11.dulcehogar.s3.negocio.CuentaSocio;
+import com.grupo11.dulcehogar.s3.negocio.NegCuentaSocio;
 
 /**
  *
  * @author micha
  */
 public class pagarCuotaMensual extends javax.swing.JInternalFrame {
-
+NegCuentaSocio negCuentaSocio;
     /**
      * Creates new form pagarCuotaMensual
      */
     public pagarCuotaMensual() {
         initComponents();
+        this.negCuentaSocio=new NegCuentaSocio();
     }
 
     /**
@@ -47,12 +45,22 @@ public class pagarCuotaMensual extends javax.swing.JInternalFrame {
         jLabel1.setText("RUT Socio:");
 
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Monto Cuota");
 
         jLabel3.setText("Numero Cuota:");
 
         btn_pagar.setText("Pagar");
+        btn_pagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pagarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,65 +114,25 @@ public class pagarCuotaMensual extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         String rut = txt_RUT.getText();
-
-        Conexion conexion = new Conexion();
-        Connection cnx = conexion.obtenerConexion();
-        try {
-            String query = "SELECT valorcuota, numcuota FROM cuenta_socio WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
-            PreparedStatement pst = cnx.prepareStatement(query);
-            pst.setString(1, rut);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                txt_montoCuota.setText(rs.getString("valorcuota"));
-                txt_numeroCuota.setText(rs.getString("numcuota"));
-            } else {
-                JOptionPane.showMessageDialog(this, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            cnx.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al buscar los datos del socio", "Error", JOptionPane.ERROR_MESSAGE);
+        CuentaSocio cuentaSocio = negCuentaSocio.buscarValorCuota(this, rut);
+        if (cuentaSocio != null) {
+            txt_montoCuota.setText(Integer.toString(cuentaSocio.getValorCuota()));
+            txt_numeroCuota.setText(Integer.toString(cuentaSocio.getNumCuota()));
         }
-    }
+        
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
-    private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
+        // TODO add your handling code here:
         String rut = txt_RUT.getText();
-        double montoCuota = Double.parseDouble(txt_montoCuota.getText());
+        negCuentaSocio.pagarCuota(this,rut, txt_montoCuota.getText());
+    }//GEN-LAST:event_btn_pagarActionPerformed
 
-        Conexion conexion = new Conexion();
-        Connection cnx = conexion.obtenerConexion();
-        try {
-            // Consultar la cantidad aportada actual y el número de cuota
-            String query = "SELECT cantaportada, numcuota FROM cuenta_socio WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
-            PreparedStatement pst = cnx.prepareStatement(query);
-            pst.setString(1, rut);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                double cantidadAportada = rs.getDouble("cantaportada");
-                int numeroCuota = rs.getInt("numcuota");
+   
 
-                // Actualizar la cantidad aportada con el monto ingresado y restar 1 al número de cuota
-                double nuevaCantidadAportada = cantidadAportada + montoCuota;
-                int nuevoNumeroCuota = numeroCuota - 1;
-                String updateQuery = "UPDATE cuenta_socio SET cantaportada = ?, numcuota = ? WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
-                PreparedStatement updatePst = cnx.prepareStatement(updateQuery);
-                updatePst.setDouble(1, nuevaCantidadAportada);
-                updatePst.setInt(2, nuevoNumeroCuota);
-                updatePst.setString(3, rut);
-                updatePst.executeUpdate();
-
-                JOptionPane.showMessageDialog(this, "Cuota pagada exitosamente");
-            } else {
-                JOptionPane.showMessageDialog(this, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            cnx.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al pagar la cuota", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
