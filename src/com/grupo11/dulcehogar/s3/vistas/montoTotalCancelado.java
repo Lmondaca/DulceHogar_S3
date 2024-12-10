@@ -2,25 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package dulcehogar.vistas;
+package com.grupo11.dulcehogar.s3.vistas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import bd_dulcehogar.Conexion;
+import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
+import com.grupo11.dulcehogar.s3.negocio.NegCuentaSocio;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author micha
  */
-public class cuotaPorCancelar extends javax.swing.JInternalFrame {
+public class montoTotalCancelado extends javax.swing.JInternalFrame {
 
+    NegCuentaSocio negCuentaSocio;
     /**
-     * Creates new form cuotaPorCancelar
+     * Creates new form montoTotalCancelado
      */
-    public cuotaPorCancelar() {
+    public montoTotalCancelado() {
         initComponents();
+        this.negCuentaSocio=new NegCuentaSocio();
     }
 
     /**
@@ -36,10 +39,10 @@ public class cuotaPorCancelar extends javax.swing.JInternalFrame {
         txt_RUT = new javax.swing.JTextField();
         btn_buscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txt_cuotas = new javax.swing.JTextField();
+        txt_montoTotalCancelado = new javax.swing.JTextField();
 
         setClosable(true);
-        setTitle("Cuotas Por Cancelar");
+        setTitle("Monto Total Cancelado");
 
         jLabel1.setText("RUT Socio:");
 
@@ -50,72 +53,65 @@ public class cuotaPorCancelar extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Número de Cuotas por Cancelar:");
+        jLabel2.setText("Monto Total Cancelado:");
+
+        txt_montoTotalCancelado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txt_cuotas, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(158, 158, 158))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabel1)
-                .addGap(32, 32, 32)
-                .addComponent(txt_RUT, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_buscar)
-                .addGap(37, 37, 37))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_montoTotalCancelado, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_RUT, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_buscar)))))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_RUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_buscar))
-                .addGap(48, 48, 48)
+                .addGap(68, 68, 68)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(txt_cuotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addComponent(txt_montoTotalCancelado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {
-        String rut = txt_RUT.getText();
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+         String rut = txt_RUT.getText();
 
-        Conexion conexion = new Conexion();
-        Connection cnx = conexion.obtenerConexion();
-        try {
-            String query = "SELECT numcuota FROM cuenta_socio WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
-            PreparedStatement pst = cnx.prepareStatement(query);
-            pst.setString(1, rut);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                txt_cuotas.setText(rs.getString("numcuota"));
-            } else {
-                JOptionPane.showMessageDialog(this, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            cnx.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al buscar los datos del socio", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+        txt_montoTotalCancelado.setText(negCuentaSocio.buscarMontoApor(this,rut));
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    
+
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txt_RUT;
-    private javax.swing.JTextField txt_cuotas;
+    private javax.swing.JTextField txt_montoTotalCancelado;
     // End of variables declaration//GEN-END:variables
 }

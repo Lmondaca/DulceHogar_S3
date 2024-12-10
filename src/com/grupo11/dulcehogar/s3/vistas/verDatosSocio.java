@@ -2,28 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package dulcehogar.vistas;
+package com.grupo11.dulcehogar.s3.vistas;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import bd_dulcehogar.Conexion;
+import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
+import com.grupo11.dulcehogar.s3.negocio.NegSocio;
+import com.grupo11.dulcehogar.s3.negocio.Socio;
 import javax.swing.JOptionPane;
-import dulcehogar.Validar;
+import com.grupo11.dulcehogar.s3.negocio.Validar;
+import java.awt.HeadlessException;
 
 /**
  *
  * @author micha
  */
 public class verDatosSocio extends javax.swing.JInternalFrame {
-
-    /**
+ NegSocio negSocio;
+ /**
      * Creates new form verDatosSocio
      */
     public verDatosSocio() {
         initComponents();
+        this.negSocio = new NegSocio();
         txt_ingRUT.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -87,6 +91,11 @@ public class verDatosSocio extends javax.swing.JInternalFrame {
         });
 
         jLabel9.setText("Presiona Enter");
+        jLabel9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel9KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,6 +172,10 @@ public class verDatosSocio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_telefonoActionPerformed
 
+    private void jLabel9KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel9KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9KeyPressed
+
     private void buscarSocio() {
         String rut = txt_ingRUT.getText();
         Validar validar = new Validar();
@@ -172,6 +185,19 @@ public class verDatosSocio extends javax.swing.JInternalFrame {
             return;
         }
 
+        Socio socio = negSocio.buscarSocio(this, rut);
+        if(socio!=null){
+            txt_nombre.setText(socio.getNombre());
+            txt_apellidopaterno.setText(socio.getAppPaterno());
+            txt_apellidomaterno.setText(socio.getAppMaterno());
+            txt_correo.setText(socio.getCorreo());
+            txt_telefono.setText(Integer.toString(socio.getNumTelefono()));
+            txt_domicilio.setText(socio.getDomicilio());
+            txt_comuna.setText(socio.getComuna());
+        }
+    }
+
+    public void buscarSocio(String rut) throws HeadlessException {
         Conexion conexion = new Conexion();
         Connection cnx = conexion.obtenerConexion();
         try {
@@ -180,13 +206,7 @@ public class verDatosSocio extends javax.swing.JInternalFrame {
             pst.setString(1, rut);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                txt_nombre.setText(rs.getString("nombre"));
-                txt_apellidopaterno.setText(rs.getString("apellidopaterno"));
-                txt_apellidomaterno.setText(rs.getString("apellidomaterno"));
-                txt_correo.setText(rs.getString("correo"));
-                txt_telefono.setText(rs.getString("telefono"));
-                txt_domicilio.setText(rs.getString("domicilio"));
-                txt_comuna.setText(rs.getString("comuna"));
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
             }

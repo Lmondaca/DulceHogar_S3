@@ -1,4 +1,4 @@
-package bd_dulcehogar;
+package com.grupo11.dulcehogar.s3.acceso_datos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,9 +15,9 @@ public class Conexion {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Datos de conexión
-            String url = "jdbc:mysql://localhost:3306/bd_dulcehogar"; // Asegúrate de que esta URL sea correcta
+            String url = "jdbc:mysql://localhost:3306/dulcehogar"; // Asegúrate de que esta URL sea correcta
             String user = "root";
-            String pass = "Mkg299..";
+            String pass = "oTfuhT_em3dnwyC";
 
             // Establecer la conexión
             conexion = DriverManager.getConnection(url, user, pass);
@@ -37,7 +37,7 @@ public class Conexion {
     }
     
     // Método principal para probar la conexión
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Conexion conexionBD = new Conexion();
         Connection cnx = conexionBD.obtenerConexion();
         
@@ -51,5 +51,5 @@ public class Conexion {
                 ex.printStackTrace();
             }
         }
-    }
+    }*/
 }

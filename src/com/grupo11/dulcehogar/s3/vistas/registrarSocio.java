@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package dulcehogar.vistas;
+package com.grupo11.dulcehogar.s3.vistas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import bd_dulcehogar.Conexion;
+import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
+import com.grupo11.dulcehogar.s3.negocio.NegSocio;
 import javax.swing.JOptionPane;
 import java.sql.SQLIntegrityConstraintViolationException;
-import dulcehogar.Validar;
 
 /**
  *
@@ -17,12 +17,16 @@ import dulcehogar.Validar;
  */
 public class registrarSocio extends javax.swing.JInternalFrame {
 
+    
+    NegSocio negSocio;
     /**
      * Creates new form registrarSocio
      */
     public registrarSocio() {
         initComponents();
+        this.negSocio = new NegSocio();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -190,60 +194,17 @@ public class registrarSocio extends javax.swing.JInternalFrame {
         String comuna = txt_comuna.getText().toUpperCase();
         String numeroSocio = txt_numeroSocio.getText().toUpperCase();
 
-        Validar validar = new Validar();
+        String mensajeRetorno =negSocio.registrarSocio(nombre, apellidoPaterno, apellidoMaterno, rut, correo, telefono, numeroSocio,domicilio,comuna);
+        if (mensajeRetorno != "") {
+            JOptionPane.showMessageDialog(this,mensajeRetorno , "Error", JOptionPane.ERROR_MESSAGE);
 
-        if (!validar.esSoloLetras(nombre)) {
-            JOptionPane.showMessageDialog(this, "Nombre inválido. Debe contener solo letras y al menos 2 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!validar.esSoloLetras(apellidoPaterno)) {
-            JOptionPane.showMessageDialog(this, "Apellido Paterno inválido. Debe contener solo letras y al menos 2 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!validar.esSoloLetras(apellidoMaterno)) {
-            JOptionPane.showMessageDialog(this, "Apellido Materno inválido. Debe contener solo letras y al menos 2 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!validar.rut(rut)) {
-            JOptionPane.showMessageDialog(this, "RUT inválido. Debe tener el formato 12.345.678-9.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!validar.correoValido(correo)) {
-            JOptionPane.showMessageDialog(this, "Correo inválido. Debe contener un '@' y un '.'.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!validar.telefonoValido(telefono)) {
-            JOptionPane.showMessageDialog(this, "Teléfono inválido. Debe tener 9 dígitos y comenzar con 9 o 2.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!validar.nroCuenta(numeroSocio)) {
-            JOptionPane.showMessageDialog(this, "Número de socio inválido. Debe ser un número de 9 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    
 
-        Conexion conexion = new Conexion();
-        Connection cnx = conexion.obtenerConexion();
-        try {
-            String query = "INSERT INTO socio (nombre, apellidopaterno, apellidomaterno, rut, correo, telefono, domicilio, comuna, numerocuenta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pst = cnx.prepareStatement(query);
-            pst.setString(1, nombre);
-            pst.setString(2, apellidoPaterno);
-            pst.setString(3, apellidoMaterno);
-            pst.setString(4, rut);
-            pst.setString(5, correo);
-            pst.setString(6, telefono);
-            pst.setString(7, domicilio);
-            pst.setString(8, comuna);
-            pst.setString(9, numeroSocio);
-            pst.executeUpdate();
-
-            // Insertar registro en cuenta_socio
-            String queryCuenta = "INSERT INTO cuenta_socio (numerocuenta) VALUES (?)";
-            PreparedStatement pstCuenta = cnx.prepareStatement(queryCuenta);
-            pstCuenta.setString(1, numeroSocio);
-            pstCuenta.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Socio RUN: " + rut + " registrado exitosamente");
+        
+      
+        JOptionPane.showMessageDialog(this, "Socio RUN: " + rut + " registrado exitosamente");
             txt_nombre.setText("");
             txt_apellidoPaterno.setText("");
             txt_apellidoMaterno.setText("");
@@ -253,13 +214,9 @@ public class registrarSocio extends javax.swing.JInternalFrame {
             txt_domicilio.setText("");
             txt_comuna.setText("");
             txt_numeroSocio.setText("");
-            cnx.close();
-        } catch (SQLIntegrityConstraintViolationException e) {
-            JOptionPane.showMessageDialog(this, "Número de socio ya registrado anteriormente", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
