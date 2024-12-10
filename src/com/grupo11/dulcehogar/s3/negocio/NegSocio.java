@@ -6,10 +6,11 @@ package com.grupo11.dulcehogar.s3.negocio;
 
 import com.grupo11.dulcehogar.s3.acceso_datos.AccCuentaSocio;
 import com.grupo11.dulcehogar.s3.acceso_datos.AccSocio;
+import com.grupo11.dulcehogar.s3.vistas.verDatosSocio;
+import java.awt.HeadlessException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,8 +65,25 @@ public class NegSocio {
         }
         return "";
     }
+    
+    
 
-
+  public Socio buscarSocio(verDatosSocio thisverDatosSocio, String rut) throws HeadlessException {
+        
+        try {
+            Socio socioEncontrado = accSocio.buscarSocio(rut);
+            if (socioEncontrado!=null) {
+                return socioEncontrado;
+            } else {
+                JOptionPane.showMessageDialog(thisverDatosSocio, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(thisverDatosSocio, "Error al buscar los datos del socio", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
 
     
 }

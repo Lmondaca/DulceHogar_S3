@@ -4,8 +4,10 @@
  */
 package com.grupo11.dulcehogar.s3.acceso_datos;
 
+import com.grupo11.dulcehogar.s3.negocio.Socio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -35,5 +37,36 @@ public class AccSocio {
         
    
     }
+    public Socio buscarSocio(String rut){
+        try{
+            Conexion conexion = new Conexion();
+        Connection cnx = conexion.obtenerConexion();
+            String query = "SELECT * FROM socio WHERE rut = ?";
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setString(1, rut);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                Socio socioEnc =new Socio(rut, rs.getString("nombre"),
+                        rs.getString("apellidopaterno"),
+                        rs.getString("apellidomaterno"),
+                        rs.getString("correo"),
+                        rs.getString("domicilio"),
+                        "region", "ciudad",
+                        rs.getString("comuna"),
+                        Integer.parseInt(rs.getString("telefono")),
+                        0
+                );
+                cnx.close();
+
+                return socioEnc;
+        
+    }
+        }
+        catch (Exception e){
+            return null;
+        }
+        return null;
+        
+    }        
     
 }

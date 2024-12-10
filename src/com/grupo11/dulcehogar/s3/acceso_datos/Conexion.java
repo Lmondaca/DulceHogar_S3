@@ -37,7 +37,7 @@ public class Conexion {
     }
     
     // Método principal para probar la conexión
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Conexion conexionBD = new Conexion();
         Connection cnx = conexionBD.obtenerConexion();
         
@@ -51,5 +51,5 @@ public class Conexion {
                 ex.printStackTrace();
             }
         }
-    }
+    }*/
 }

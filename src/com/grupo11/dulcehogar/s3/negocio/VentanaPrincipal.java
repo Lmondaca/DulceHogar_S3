@@ -536,7 +536,7 @@ public class VentanaPrincipal extends JFrame {
     
 
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         // Crear y mostrar la ventana principal
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -544,5 +544,5 @@ public class VentanaPrincipal extends JFrame {
                 new VentanaPrincipal().setVisible(true);
             }
         });
-    }
+    }*/
 }
