@@ -4,23 +4,21 @@
  */
 package com.grupo11.dulcehogar.s3.vistas;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import com.grupo11.dulcehogar.s3.acceso_datos.Conexion;
-import javax.swing.JOptionPane;
+import com.grupo11.dulcehogar.s3.negocio.CuentaSocio;
+import com.grupo11.dulcehogar.s3.negocio.NegCuentaSocio;
 
 /**
  *
  * @author micha
  */
 public class cuotaPorCancelar extends javax.swing.JInternalFrame {
-
+NegCuentaSocio negCuentaSocio;
     /**
      * Creates new form cuotaPorCancelar
      */
     public cuotaPorCancelar() {
         initComponents();
+        this.negCuentaSocio=new NegCuentaSocio();
     }
 
     /**
@@ -44,6 +42,11 @@ public class cuotaPorCancelar extends javax.swing.JInternalFrame {
         jLabel1.setText("RUT Socio:");
 
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Número de Cuotas por Cancelar:");
 
@@ -84,27 +87,19 @@ public class cuotaPorCancelar extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
         String rut = txt_RUT.getText();
 
-        Conexion conexion = new Conexion();
-        Connection cnx = conexion.obtenerConexion();
-        try {
-            String query = "SELECT numcuota FROM cuenta_socio WHERE numerocuenta = (SELECT numerocuenta FROM socio WHERE rut = ?)";
-            PreparedStatement pst = cnx.prepareStatement(query);
-            pst.setString(1, rut);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                txt_cuotas.setText(rs.getString("numcuota"));
-            } else {
-                JOptionPane.showMessageDialog(this, "Socio no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            cnx.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al buscar los datos del socio", "Error", JOptionPane.ERROR_MESSAGE);
+        CuentaSocio cuentaSocio = negCuentaSocio.buscarNumCuota(this, rut);
+        if (cuentaSocio != null) {
+            txt_cuotas.setText(Integer.toString(cuentaSocio.getNumCuota()));
+
         }
-    }
+
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
