@@ -73,7 +73,7 @@ public class VentanaPrincipal extends JFrame {
             }
         });
     }
-
+    
     private void mostrarFormularioRegistrar() {
         // Crear nueva ventana para registrar un socio
         JFrame formularioRegistrar = new JFrame("Registrar Socio");

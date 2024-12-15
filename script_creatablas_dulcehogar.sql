@@ -29,6 +29,5 @@ CREATE TABLE usuario (
     apellidomaterno VARCHAR(15)
 );
 
-insert into usuario values ('12.123.123-1','hola123', 'Lucas', 'Mondaca', 'Huerta');
+insert into usuario values ('admin','admin', '-', '-', '-');
 select * from usuario;
-SELECT * FROM SOCIO NATURAL JOIN CUENTA_SOCIO;

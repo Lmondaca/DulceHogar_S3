@@ -17,7 +17,7 @@ public class Conexion {
             // Datos de conexión
             String url = "jdbc:mysql://localhost:3306/dulcehogar"; // Asegúrate de que esta URL sea correcta
             String user = "root";
-            String pass = "oTfuhT_em3dnwyC";
+            String pass = "";
 
             // Establecer la conexión
             conexion = DriverManager.getConnection(url, user, pass);
