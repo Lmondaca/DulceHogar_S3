@@ -4,6 +4,7 @@
  */
 package com.grupo11.dulcehogar.s3.vistas;
 
+import com.grupo11.dulcehogar.s3.negocio.SesionGlobal;
 import com.grupo11.dulcehogar.s3.negocio.CuentaSocio;
 import com.grupo11.dulcehogar.s3.negocio.NegCuentaSocio;
 import com.grupo11.dulcehogar.s3.negocio.Usuario;
@@ -33,6 +34,12 @@ public class paginaInicio extends javax.swing.JFrame {
         }
         fieldNomLogeado.setText(usuarioLogeado.getNombre() + " " + usuarioLogeado.getApellidoPaterno() + " " + usuarioLogeado.getApellidoMaterno());
         
+        // Deshabilitar botón si el RUT es admin
+        String rutLogueado = SesionGlobal.getInstancia().getRutUsuario();
+        if (!"admin".equalsIgnoreCase(rutLogueado)) {
+            btn_registrarSocio.setEnabled(false);
+    }
+  
     }
 
     /**
@@ -308,14 +315,15 @@ public class paginaInicio extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addComponent(desktop01))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_registrarSocio)
-                    .addComponent(btn_pagarCuotaMensual)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_cuotaPorCancelar)
-                        .addComponent(jLabel10)))
+                        .addComponent(jLabel10))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_registrarSocio)
+                        .addComponent(btn_pagarCuotaMensual)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel8)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
