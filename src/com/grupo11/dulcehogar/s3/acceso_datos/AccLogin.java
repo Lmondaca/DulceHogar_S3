@@ -8,6 +8,7 @@ import com.grupo11.dulcehogar.s3.negocio.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -43,6 +44,21 @@ public class AccLogin {
 
         }
         return null;
+
+    }
+
+    public Connection ingresarUsuario(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String pass) throws SQLException {
+        Conexion conexion = new Conexion();
+        Connection cnx = conexion.obtenerConexion();
+        String query = "INSERT INTO usuario (rut, contrasenna, nombre, apellidopaterno, apellidomaterno) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setString(1, rut);
+        pst.setString(2, pass);
+        pst.setString(3, nombre);
+        pst.setString(4, apellidoPaterno);
+        pst.setString(5, apellidoMaterno);
+        pst.executeUpdate();
+        return cnx;
 
     }
 

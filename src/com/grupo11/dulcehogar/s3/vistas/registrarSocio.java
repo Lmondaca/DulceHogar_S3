@@ -100,30 +100,35 @@ public class registrarSocio extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addGap(57, 57, 57)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_nombre)
-                    .addComponent(txt_apellidoPaterno)
-                    .addComponent(txt_apellidoMaterno)
-                    .addComponent(txt_RUT)
-                    .addComponent(txt_correo)
-                    .addComponent(txt_telefono)
-                    .addComponent(txt_domicilio)
-                    .addComponent(txt_comuna)
-                    .addComponent(txt_numeroSocio, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(63, 63, 63))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_registrar)
-                    .addComponent(fieldPassReg))
-                .addContainerGap(64, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txt_nombre)
+                        .addComponent(txt_apellidoPaterno)
+                        .addComponent(txt_apellidoMaterno)
+                        .addComponent(txt_RUT)
+                        .addComponent(txt_correo)
+                        .addComponent(txt_telefono)
+                        .addComponent(txt_domicilio)
+                        .addComponent(txt_comuna)
+                        .addComponent(txt_numeroSocio, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(fieldPassReg)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,9 +189,9 @@ public class registrarSocio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(fieldPassReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_registrar)
-                .addContainerGap())
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -202,8 +207,9 @@ public class registrarSocio extends javax.swing.JInternalFrame {
         String domicilio = txt_domicilio.getText().toUpperCase();
         String comuna = txt_comuna.getText().toUpperCase();
         String numeroSocio = txt_numeroSocio.getText().toUpperCase();
+        String pass = String.valueOf(fieldPassReg.getPassword());
 
-        String mensajeRetorno =negSocio.registrarSocio(nombre, apellidoPaterno, apellidoMaterno, rut, correo, telefono, numeroSocio,domicilio,comuna);
+        String mensajeRetorno =negSocio.registrarSocio(nombre, apellidoPaterno, apellidoMaterno, rut, correo, telefono, numeroSocio,domicilio,comuna,pass);
         if (mensajeRetorno != "") {
             JOptionPane.showMessageDialog(this,mensajeRetorno , "Error", JOptionPane.ERROR_MESSAGE);
 
