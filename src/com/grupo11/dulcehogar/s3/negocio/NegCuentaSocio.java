@@ -8,6 +8,7 @@ import com.grupo11.dulcehogar.s3.acceso_datos.AccCuentaSocio;
 import com.grupo11.dulcehogar.s3.vistas.cuotaPorCancelar;
 import com.grupo11.dulcehogar.s3.vistas.montoTotalCancelado;
 import com.grupo11.dulcehogar.s3.vistas.pagarCuotaMensual;
+import com.grupo11.dulcehogar.s3.vistas.paginaInicio;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
@@ -42,6 +43,25 @@ public class NegCuentaSocio {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(thispagarCuotaMensual, "Error al buscar los datos del socio", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    public CuentaSocio buscarValorCuota2( String rut) throws HeadlessException {
+        
+        
+        
+        try {
+            CuentaSocio cuentaSocio = accCuentaSocio.buscarValorCuota(rut);
+            if (cuentaSocio !=null) {
+                return cuentaSocio;
+                
+            } else {
+                return null;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            
         }
         return null;
     }

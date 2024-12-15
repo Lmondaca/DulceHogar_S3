@@ -5,6 +5,7 @@
 package com.grupo11.dulcehogar.s3.negocio;
 
 import com.grupo11.dulcehogar.s3.acceso_datos.AccCuentaSocio;
+import com.grupo11.dulcehogar.s3.acceso_datos.AccLogin;
 import com.grupo11.dulcehogar.s3.acceso_datos.AccSocio;
 import com.grupo11.dulcehogar.s3.vistas.verDatosSocio;
 import java.awt.HeadlessException;
@@ -19,14 +20,16 @@ import javax.swing.JOptionPane;
 public class NegSocio {
     AccSocio accSocio;
     AccCuentaSocio accCuentaSocio;
+    AccLogin accLogin;
     
     public NegSocio(){
         this.accSocio = new AccSocio();
         this.accCuentaSocio= new AccCuentaSocio();
+        this.accLogin = new AccLogin();
         
     }
     
-    public String registrarSocio(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String correo, String telefono, String numeroSocio,String domicilio, String comuna) {
+    public String registrarSocio(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String correo, String telefono, String numeroSocio,String domicilio, String comuna,String pass) {
         Validar validar = new Validar();
         if (!validar.esSoloLetras(nombre)) {
             
@@ -56,6 +59,7 @@ public class NegSocio {
             Connection cnx=accSocio.insertaSocio(nombre, apellidoPaterno, apellidoMaterno, rut, correo, telefono, domicilio, comuna, numeroSocio);
 
             cnx=accCuentaSocio.insertarCuentaSocio(cnx,Integer.toString(socioNuevo.getCuentaSocio().getNumeroCuenta()));
+            cnx=accLogin.ingresarUsuario(nombre, apellidoPaterno, apellidoMaterno, rut, pass);
             cnx.close();
             
         } catch (SQLIntegrityConstraintViolationException e) {
