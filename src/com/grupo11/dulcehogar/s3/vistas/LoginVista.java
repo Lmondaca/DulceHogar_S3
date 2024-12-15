@@ -4,6 +4,7 @@
  */
 package com.grupo11.dulcehogar.s3.vistas;
 
+import com.grupo11.dulcehogar.s3.negocio.SesionGlobal;
 import com.grupo11.dulcehogar.s3.negocio.Usuario;
 import com.grupo11.dulcehogar.s3.negocio.negLogin;
 import javax.swing.JOptionPane;
@@ -179,6 +180,8 @@ public class LoginVista extends javax.swing.JFrame {
         Usuario usuarioLogeado = neglogin.iniciarSesion(rut,pass);
         
         if (usuarioLogeado != null) {
+            SesionGlobal.getInstancia().setRutUsuario(usuarioLogeado.getRut());
+            
             paginaInicio inicio = new paginaInicio(usuarioLogeado);
             //desktop01.add(inicio);
             this.setVisible(false);
