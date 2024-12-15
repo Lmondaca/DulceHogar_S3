@@ -4,6 +4,10 @@
  */
 package com.grupo11.dulcehogar.s3.vistas;
 
+import com.grupo11.dulcehogar.s3.negocio.CuentaSocio;
+import com.grupo11.dulcehogar.s3.negocio.NegCuentaSocio;
+import com.grupo11.dulcehogar.s3.negocio.Usuario;
+
 /**
  *
  * @author micha
@@ -16,6 +20,14 @@ public class paginaInicio extends javax.swing.JFrame {
     public paginaInicio() {
         initComponents();
     }
+    public paginaInicio(Usuario usuarioLogeado) {
+        initComponents();
+        CuentaSocio cuantoSocio = new NegCuentaSocio().buscarValorCuota2(usuarioLogeado.getRut());
+        fieldMontoProximaCuota.setText(String.valueOf(cuantoSocio.getNumCuota()>0 ? cuantoSocio.getValorCuota() : 0));
+        fieldNomLogeado.setText(usuarioLogeado.getNombre() + " "+usuarioLogeado.getApellidoPaterno()+" "+ usuarioLogeado.getApellidoMaterno());
+        
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,6 +39,10 @@ public class paginaInicio extends javax.swing.JFrame {
     private void initComponents() {
 
         desktop01 = new javax.swing.JDesktopPane();
+        jLabel2 = new javax.swing.JLabel();
+        fieldNomLogeado = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        fieldMontoProximaCuota = new javax.swing.JTextField();
         btn_registrarSocio = new javax.swing.JButton();
         btn_verDatos = new javax.swing.JButton();
         btn_pagarCuotaMensual = new javax.swing.JButton();
@@ -53,15 +69,54 @@ public class paginaInicio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dulce Hogar");
 
+        jLabel2.setText("Bienvenido(a):");
+
+        fieldNomLogeado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNomLogeadoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Proxima Cuota es de :");
+
+        fieldMontoProximaCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldMontoProximaCuotaActionPerformed(evt);
+            }
+        });
+
+        desktop01.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        desktop01.setLayer(fieldNomLogeado, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        desktop01.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        desktop01.setLayer(fieldMontoProximaCuota, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout desktop01Layout = new javax.swing.GroupLayout(desktop01);
         desktop01.setLayout(desktop01Layout);
         desktop01Layout.setHorizontalGroup(
             desktop01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGroup(desktop01Layout.createSequentialGroup()
+                .addGap(187, 187, 187)
+                .addGroup(desktop01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(desktop01Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(42, 42, 42)
+                        .addComponent(fieldMontoProximaCuota, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(fieldNomLogeado, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         desktop01Layout.setVerticalGroup(
             desktop01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGroup(desktop01Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(fieldNomLogeado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addGroup(desktop01Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(fieldMontoProximaCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
         btn_registrarSocio.setText("Registrar Socio");
@@ -216,9 +271,9 @@ public class paginaInicio extends javax.swing.JFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
-                        .addContainerGap(85, Short.MAX_VALUE))
+                        .addContainerGap(53, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(6, 64, Short.MAX_VALUE)
+                        .addGap(6, 32, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -248,7 +303,7 @@ public class paginaInicio extends javax.swing.JFrame {
                     .addComponent(btn_montoTotalCancelado)
                     .addComponent(jLabel7)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cuotaPorCancelar)
                     .addComponent(jLabel10))
@@ -341,28 +396,35 @@ public class paginaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cuotaPorCancelarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.exit(0); //Salir del programa
+        new LoginVista().setVisible(true);
+        this.setVisible(false);
+       // System.exit(0); //Salir del programa
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void mni_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mni_salirActionPerformed
-        System.exit(0); //Salir del programa
+        new LoginVista().setVisible(true);
+        this.setVisible(false);
+        //System.exit(0); //Salir del programa
     }//GEN-LAST:event_mni_salirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void fieldNomLogeadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNomLogeadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNomLogeadoActionPerformed
+
+    private void fieldMontoProximaCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMontoProximaCuotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldMontoProximaCuotaActionPerformed
+/*
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+   
+
+  
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+              }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(paginaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -373,15 +435,16 @@ public class paginaInicio extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(paginaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+
+       
+       java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new paginaInicio().setVisible(true);
             }
         });
     }
+*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cuotaPorCancelar;
@@ -390,9 +453,13 @@ public class paginaInicio extends javax.swing.JFrame {
     private javax.swing.JButton btn_registrarSocio;
     private javax.swing.JButton btn_verDatos;
     private javax.swing.JDesktopPane desktop01;
+    private javax.swing.JTextField fieldMontoProximaCuota;
+    private javax.swing.JTextField fieldNomLogeado;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

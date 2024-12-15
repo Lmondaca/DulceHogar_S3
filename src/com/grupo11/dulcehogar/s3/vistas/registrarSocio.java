@@ -57,6 +57,8 @@ public class registrarSocio extends javax.swing.JInternalFrame {
         txt_comuna = new javax.swing.JTextField();
         txt_numeroSocio = new javax.swing.JTextField();
         btn_registrar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        fieldPassReg = new javax.swing.JPasswordField();
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setText("jMenuItem1");
@@ -89,6 +91,8 @@ public class registrarSocio extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setText("Contraseña");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,17 +100,23 @@ public class registrarSocio extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
-                .addGap(57, 57, 57)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(63, 63, 63))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_registrar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txt_nombre)
                         .addComponent(txt_apellidoPaterno)
@@ -116,14 +126,14 @@ public class registrarSocio extends javax.swing.JInternalFrame {
                         .addComponent(txt_telefono)
                         .addComponent(txt_domicilio)
                         .addComponent(txt_comuna)
-                        .addComponent(txt_numeroSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_registrar))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addComponent(txt_numeroSocio, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(fieldPassReg)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -175,9 +185,13 @@ public class registrarSocio extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addGap(16, 16, 16)
                         .addComponent(jLabel9)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(fieldPassReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_registrar)
-                .addGap(31, 31, 31))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -193,8 +207,9 @@ public class registrarSocio extends javax.swing.JInternalFrame {
         String domicilio = txt_domicilio.getText().toUpperCase();
         String comuna = txt_comuna.getText().toUpperCase();
         String numeroSocio = txt_numeroSocio.getText().toUpperCase();
+        String pass = String.valueOf(fieldPassReg.getPassword());
 
-        String mensajeRetorno =negSocio.registrarSocio(nombre, apellidoPaterno, apellidoMaterno, rut, correo, telefono, numeroSocio,domicilio,comuna);
+        String mensajeRetorno =negSocio.registrarSocio(nombre, apellidoPaterno, apellidoMaterno, rut, correo, telefono, numeroSocio,domicilio,comuna,pass);
         if (mensajeRetorno != "") {
             JOptionPane.showMessageDialog(this,mensajeRetorno , "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -221,7 +236,9 @@ public class registrarSocio extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_registrar;
+    private javax.swing.JPasswordField fieldPassReg;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
