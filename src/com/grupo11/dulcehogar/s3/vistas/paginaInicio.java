@@ -22,10 +22,16 @@ public class paginaInicio extends javax.swing.JFrame {
     }
     public paginaInicio(Usuario usuarioLogeado) {
         initComponents();
-        CuentaSocio cuantoSocio = new NegCuentaSocio().buscarValorCuota2(usuarioLogeado.getRut());
+     /*   CuentaSocio cuantoSocio = new NegCuentaSocio().buscarValorCuota2(usuarioLogeado.getRut());
         fieldMontoProximaCuota.setText(String.valueOf(cuantoSocio.getNumCuota()>0 ? cuantoSocio.getValorCuota() : 0));
-        fieldNomLogeado.setText(usuarioLogeado.getNombre() + " "+usuarioLogeado.getApellidoPaterno()+" "+ usuarioLogeado.getApellidoMaterno());
-        
+        fieldNomLogeado.setText(usuarioLogeado.getNombre() + " "+usuarioLogeado.getApellidoPaterno()+" "+ usuarioLogeado.getApellidoMaterno());*/
+        CuentaSocio cuantoSocio = new NegCuentaSocio().buscarValorCuota2(usuarioLogeado.getRut());
+        if (cuantoSocio != null) {
+            fieldMontoProximaCuota.setText(String.valueOf(cuantoSocio.getNumCuota() > 0 ? cuantoSocio.getValorCuota() : 0));
+        } else {
+            fieldMontoProximaCuota.setText("0");
+        }
+        fieldNomLogeado.setText(usuarioLogeado.getNombre() + " " + usuarioLogeado.getApellidoPaterno() + " " + usuarioLogeado.getApellidoMaterno());
         
     }
 
